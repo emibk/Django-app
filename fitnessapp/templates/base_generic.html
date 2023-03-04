@@ -34,6 +34,10 @@
             margin-left: 160px;
             padding: 0px 10px;
         }
+        .user {
+            margin-left: 180px;
+            padding: 0px 160px;
+        }
         .bg-image {
             opacity: 0.7;
             background-size: cover;
@@ -97,16 +101,33 @@
 
   <div class="sidenav">
   <ul>
-      {% url 'workouts' as workouts_url %}
-            <li class="nav-item {% if request.path == workouts_url %}active{% endif %}">
-               <a class="nav-link" href="/workouts"><span>Antrenamente</span></a>
-            </li>
+    {% if user.is_authenticated %}
+    {% url 'accounts/logout' as logout_url %}
+    <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+       <a class="nav-link" href="accounts/logout"><span>Logout</span></a>
+    </li>
+    {% else %}
+    {% url 'accounts/login' as login_url %}
+    <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+       <a class="nav-link" href="accounts/login"><span>Login</span></a>
+    </li>
+    {%endif%}
+    {% url '' as workouts_url %}
+    <li class="nav-item {% if request.path == workouts_url %}active{% endif %}">
+         <a class="nav-link" href="/"><span>Antrenamente</span></a>
+    </li>
+      
 
   </ul>
   </div>
+  {% if user.is_authenticated %}
+  <div class="user">
+    <h1>Welcome, {{request.user.username }}!</h1>
+  </div>
+  {% endif %}
   <div class="main">
   {% block content %}
-
+  
   {% endblock %}
 
   </div>
