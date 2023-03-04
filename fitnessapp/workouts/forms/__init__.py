@@ -1,1 +1,1 @@
-from .register import NewUserForm
+from .register import RegisterForm
